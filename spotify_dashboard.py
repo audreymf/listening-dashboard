@@ -36,7 +36,7 @@ else:
 
 # --- Summary Stats ---
 total_listens = len(filtered)
-most_active_month = filtered.groupby('month_str')['trackName'].count().idxmax()
+most_active_month = filtered.groupby('month_str')['trackName'].count()
 most_played_track = filtered.groupby('trackName')['trackName'].count().idxmax()
 
 col1, col2, col3 = st.columns(3)
