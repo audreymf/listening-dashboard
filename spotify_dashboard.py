@@ -45,7 +45,7 @@ col2.metric('Most Active Month', most_active_month)
 col3.metric('Most Played Track', most_played_track)
 
 # --- Chart ---
-monthly = filtered.groupby('month_str')['trackName'].count()
+monthly = filtered.groupby('month_str')['trackName'].count().sort_index()
 
 fig, ax = plt.subplots(figsize=(12, 4))
 monthly.plot(kind='bar', ax=ax, color='purple', edgecolor='blue')
