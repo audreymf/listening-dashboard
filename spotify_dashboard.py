@@ -15,7 +15,7 @@ json_files = glob.glob(file_pattern)
 df_list = [pd.read_json(file) for file in json_files]
 
 # 3. Combine them into a single DataFrame
-df = pd.concat(df_list, ignore_index=True)
+df = pd.concat(df_list, ignore_index=False)
 
 df['endTime'] = pd.to_datetime(df['endTime'])
 df['month_str'] = df['endTime'].dt.strftime('%b %Y')
