@@ -3,7 +3,20 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 # --- Load Data ---
-df = pd.read_json('StreamingHistory.json')
+
+import glob
+import pandas as pd
+
+# 1. Match all JSON files in the directory
+file_pattern = "StreamingHistory_music_*.json"
+json_files = glob.glob(file_pattern)
+
+# 2. Read each file into a list of DataFrames
+df_list = [pd.read_json(file) for file in json_files]
+
+# 3. Combine them into a single DataFrame
+df = pd.concat(df_list, ignore_index=True)
+
 df['endTime'] = pd.to_datetime(df['endTime'])
 df['month_str'] = df['endTime'].dt.strftime('%b %Y')
 df['month'] = df['endTime'].dt.to_period('M')
