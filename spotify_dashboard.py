@@ -36,8 +36,14 @@ else:
 
 # --- Summary Stats ---
 total_listens = len(filtered)
-most_active_month = filtered.groupby('month_str')['trackName'].count().idxmax()
-most_played_track = filtered.groupby('trackName')['trackName'].count().idxmax()
+
+if not filtered.empty:
+    most_active_month_period = filtered.groupby('month')['trackName'].count().idxmax()
+    most_active_month = most_active_month_period.strftime('%b %Y')
+    most_played_track = filtered.groupby('trackName')['trackName'].count().idxmax()
+else:
+    most_active_month = 'N/A'
+    most_played_track = 'N/A'
 
 col1, col2, col3 = st.columns(3)
 col1.metric('Total Listens', total_listens)
@@ -45,7 +51,7 @@ col2.metric('Most Active Month', most_active_month)
 col3.metric('Most Played Track', most_played_track)
 
 # --- Chart ---
-monthly = filtered.groupby('month_str')['trackName'].count()
+monthly = filtered.groupby('month_str')['trackName'].count().sort_index()
 
 fig, ax = plt.subplots(figsize=(12, 4))
 monthly.plot(kind='bar', ax=ax, color='purple', edgecolor='blue')
